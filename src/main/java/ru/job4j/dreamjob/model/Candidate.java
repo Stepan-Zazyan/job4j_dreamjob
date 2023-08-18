@@ -35,12 +35,12 @@ public class Candidate {
         this.name = name;
     }
 
-    public String getSkills() {
+    public String getDescription() {
         return description;
     }
 
-    public void setSkills(String skills) {
-        this.description = skills;
+    public void setSkills(String description) {
+        this.description = description;
     }
 
     public LocalDateTime getCreationDate() {
@@ -60,14 +60,12 @@ public class Candidate {
             return false;
         }
         Candidate that = (Candidate) o;
-        return id == that.id && Objects.equals(name, that.name)
-                && Objects.equals(description, that.description)
-                && Objects.equals(creationDate, that.creationDate);
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, creationDate);
+        return Objects.hash(id);
     }
 
     @Override
