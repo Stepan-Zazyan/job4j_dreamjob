@@ -39,7 +39,7 @@ public class Candidate {
         return description;
     }
 
-    public void setSkills(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -72,7 +72,7 @@ public class Candidate {
     public String toString() {
         return "Candidates{" + "id="
                 + id + ", name='"
-                + name + '\'' + ", skills='"
+                + name + '\'' + ", description='"
                 + description + '\'' + ", creationDate="
                 + creationDate + '}';
     }
