@@ -22,12 +22,12 @@ public class MemoryVacancyRepository implements VacancyRepository {
     private MemoryVacancyRepository() {
         this.id = new AtomicInteger(0);
         this.vacancies = new ConcurrentHashMap<>();
-        save(new Vacancy(0, "Intern Java Developer", "norm))", LocalDateTime.now(), false));
-        save(new Vacancy(0, "Junior Java Developer", "cool", LocalDateTime.now(), false));
-        save(new Vacancy(0, "Junior+ Java Developer", "cool", LocalDateTime.now(), false));
-        save(new Vacancy(0, "Middle Java Developer", "cool", LocalDateTime.now(), false));
-        save(new Vacancy(0, "Middle+ Java Developer", "cool", LocalDateTime.now(), false));
-        save(new Vacancy(0, "Senior Java Developer", "cool", LocalDateTime.now(), false));
+        save(new Vacancy(0, "Intern Java Developer", "norm))", LocalDateTime.now(), false, 1));
+        save(new Vacancy(0, "Junior Java Developer", "cool", LocalDateTime.now(), false, 1));
+        save(new Vacancy(0, "Junior+ Java Developer", "cool", LocalDateTime.now(), false, 1));
+        save(new Vacancy(0, "Middle Java Developer", "cool", LocalDateTime.now(), false, 1));
+        save(new Vacancy(0, "Middle+ Java Developer", "cool", LocalDateTime.now(), false, 1));
+        save(new Vacancy(0, "Senior Java Developer", "cool", LocalDateTime.now(), false, 1));
     }
 
     @Override
@@ -44,9 +44,10 @@ public class MemoryVacancyRepository implements VacancyRepository {
 
     @Override
     public boolean update(Vacancy vacancy) {
-        return vacancies.computeIfPresent(vacancy.getId(), (id, oldVacancy) ->
-                new Vacancy(oldVacancy.getId(), vacancy.getTitle(), vacancy.getDescription(),
-                        vacancy.getCreationDate(), vacancy.getVisible())) != null;
+        return vacancies.computeIfPresent(vacancy.getId(), (id, oldVacancy) -> new Vacancy(
+                oldVacancy.getId(), vacancy.getTitle(), vacancy.getDescription(),
+                vacancy.getCreationDate(), vacancy.getVisible(), vacancy.getCityId()
+        )) != null;
     }
 
     @Override
