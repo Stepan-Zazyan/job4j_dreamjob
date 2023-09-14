@@ -1,18 +1,24 @@
 package ru.job4j.dreamjob.repository;
 
+import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Repository;
 import ru.job4j.dreamjob.model.Candidate;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+
+@ThreadSafe
 @Repository
 public class MemoryCandidateRepository implements CandidatesRepository {
-    private final Map<Integer, Candidate> candidates = new HashMap<>();
-    private int id = 1;
+    private final Map<Integer, Candidate> candidates;
+    private final AtomicInteger id;
     private MemoryCandidateRepository() {
+        this.id = new AtomicInteger(0);
+        this.candidates = new ConcurrentHashMap<>();
         save(new Candidate(0, "Vasya", "junior", LocalDateTime.now()));
         save(new Candidate(0, "Kolya", "middle+", LocalDateTime.now()));
         save(new Candidate(0, "Petya", "junior", LocalDateTime.now()));
@@ -24,7 +30,7 @@ public class MemoryCandidateRepository implements CandidatesRepository {
 
     @Override
     public Candidate save(Candidate candidate) {
-        candidate.setId(id++);
+        candidate.setId(id.incrementAndGet());
         candidates.put(candidate.getId(), candidate);
         return candidate;
     }
