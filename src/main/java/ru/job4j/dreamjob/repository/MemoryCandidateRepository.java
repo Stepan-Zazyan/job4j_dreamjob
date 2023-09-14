@@ -8,10 +8,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-
+@Repository
 public class MemoryCandidateRepository implements CandidatesRepository {
-
-    private static final MemoryCandidateRepository INSTANCE = new MemoryCandidateRepository();
     private final Map<Integer, Candidate> candidates = new HashMap<>();
     private int id = 1;
     private MemoryCandidateRepository() {
@@ -23,9 +21,6 @@ public class MemoryCandidateRepository implements CandidatesRepository {
         save(new Candidate(0, "Maya", "junior+", LocalDateTime.now()));
     }
 
-    public static MemoryCandidateRepository getInstance() {
-        return INSTANCE;
-    }
 
     @Override
     public Candidate save(Candidate candidate) {
