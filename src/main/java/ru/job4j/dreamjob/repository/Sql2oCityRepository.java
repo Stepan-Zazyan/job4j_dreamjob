@@ -18,7 +18,7 @@ public class Sql2oCityRepository implements CityRepository {
     @Override
     public Collection<City> findAll() {
         try (var connection = sql2o.open()) {
-            var query = connection.createQuery("SELECT * FROM cities");
+            var query = connection.createQuery("SELECT * FROM schema_dreamjob.cities");
             return query.executeAndFetch(City.class);
         }
     }
