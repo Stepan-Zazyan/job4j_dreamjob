@@ -19,12 +19,12 @@ public class MemoryCandidateRepository implements CandidatesRepository {
     private MemoryCandidateRepository() {
         this.id = new AtomicInteger(0);
         this.candidates = new ConcurrentHashMap<>();
-        save(new Candidate(0, "Vasya", "junior", LocalDateTime.now(), 1));
-        save(new Candidate(0, "Kolya", "middle+", LocalDateTime.now(), 1));
-        save(new Candidate(0, "Petya", "junior", LocalDateTime.now(), 1));
-        save(new Candidate(0, "Ulya", "intern", LocalDateTime.now(), 1));
-        save(new Candidate(0, "Taya", "senior", LocalDateTime.now(), 1));
-        save(new Candidate(0, "Maya", "junior+", LocalDateTime.now(), 1));
+        save(new Candidate(0, "Vasya", "junior", LocalDateTime.now(), 1, 0));
+        save(new Candidate(0, "Kolya", "middle+", LocalDateTime.now(), 1, 0));
+        save(new Candidate(0, "Petya", "junior", LocalDateTime.now(), 1, 0));
+        save(new Candidate(0, "Ulya", "intern", LocalDateTime.now(), 1, 0));
+        save(new Candidate(0, "Taya", "senior", LocalDateTime.now(), 1, 0));
+        save(new Candidate(0, "Maya", "junior+", LocalDateTime.now(), 1, 0));
     }
 
 
@@ -43,7 +43,8 @@ public class MemoryCandidateRepository implements CandidatesRepository {
     @Override
     public boolean update(Candidate candidate) {
         return candidates.computeIfPresent(candidate.getId(), (id, oldCandidate) ->
-                new Candidate(oldCandidate.getId(), candidate.getName(), candidate.getDescription(), LocalDateTime.now(), candidate.getCityId())) != null;
+                new Candidate(oldCandidate.getId(), candidate.getName(), candidate.getDescription(),
+                        LocalDateTime.now(), candidate.getCityId(), candidate.getFileId())) != null;
     }
 
     @Override
