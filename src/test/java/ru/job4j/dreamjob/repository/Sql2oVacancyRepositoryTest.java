@@ -13,7 +13,7 @@ import static java.time.LocalDateTime.now;
 import static java.util.Collections.emptyList;
 import static java.util.Optional.empty;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-@Disabled
+
 public class Sql2oVacancyRepositoryTest {
 
     private static Sql2oVacancyRepository sql2oVacancyRepository;
