@@ -20,7 +20,7 @@ public class Sql2oVacancyRepository implements VacancyRepository {
     public Vacancy save(Vacancy vacancy) {
         try (var connection = sql2o.open()) {
             var sql = """
-                    INSERT INTO schema_dreamjob.vacancies(title, description, creation_date, visible, city_id, file_id)
+                    INSERT INTO vacancies(title, description, creation_date, visible, city_id, file_id)
                     VALUES (:title, :description, :creationDate, :visible, :cityId, :fileId)
                     """;
             var query = connection.createQuery(sql, true)
@@ -40,9 +40,9 @@ public class Sql2oVacancyRepository implements VacancyRepository {
     public boolean deleteById(int id) {
         boolean rsl = false;
         try (var connection = sql2o.open()) {
-            var query = connection.createQuery("DELETE FROM schema_dreamjob.vacancies WHERE id = :id");
+            var query = connection.createQuery("DELETE FROM vacancies WHERE id = :id");
             query.addParameter("id", id);
-            query.executeUpdate();
+            query.executeUpdate().getResult();
             rsl = true;
         }
         return rsl;
@@ -52,7 +52,7 @@ public class Sql2oVacancyRepository implements VacancyRepository {
     public boolean update(Vacancy vacancy) {
         try (var connection = sql2o.open()) {
             var sql = """
-                    UPDATE schema_dreamjob.vacancies
+                    UPDATE vacancies
                     SET title = :title, description = :description, creation_date = :creationDate,
                         visible = :visible, city_id = :cityId, file_id = :fileId
                     WHERE id = :id
@@ -73,7 +73,7 @@ public class Sql2oVacancyRepository implements VacancyRepository {
     @Override
     public Optional<Vacancy> findById(int id) {
         try (var connection = sql2o.open()) {
-            var query = connection.createQuery("SELECT * FROM schema_dreamjob.vacancies WHERE id = :id");
+            var query = connection.createQuery("SELECT * FROM vacancies WHERE id = :id");
             query.addParameter("id", id);
             var vacancy = query.setColumnMappings(Vacancy.COLUMN_MAPPING).executeAndFetchFirst(Vacancy.class);
             return Optional.ofNullable(vacancy);
@@ -83,7 +83,7 @@ public class Sql2oVacancyRepository implements VacancyRepository {
     @Override
     public Collection<Vacancy> findAll() {
         try (var connection = sql2o.open()) {
-            var query = connection.createQuery("SELECT * FROM schema_dreamjob.vacancies");
+            var query = connection.createQuery("SELECT * FROM vacancies");
             return query.setColumnMappings(Vacancy.COLUMN_MAPPING).executeAndFetch(Vacancy.class);
         }
     }
