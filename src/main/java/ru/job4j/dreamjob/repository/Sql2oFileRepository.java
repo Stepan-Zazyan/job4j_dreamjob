@@ -4,8 +4,6 @@ import org.springframework.stereotype.Repository;
 import org.sql2o.Sql2o;
 import ru.job4j.dreamjob.model.File;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,7 +18,7 @@ public class Sql2oFileRepository implements FileRepository {
     @Override
     public File save(File file) {
         try (var connection = sql2o.open()) {
-            var query = connection.createQuery("INSERT INTO files (name, path) VALUES (:name, :path)")
+            var query = connection.createQuery("INSERT INTO files (name, path) VALUES (:name, :path)", true)
                     .addParameter("name", file.getName())
                     .addParameter("path", file.getPath());
             int generatedId = query.executeUpdate().getKey(Integer.class);
