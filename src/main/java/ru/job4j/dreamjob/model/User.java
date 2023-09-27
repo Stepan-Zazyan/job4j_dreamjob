@@ -12,14 +12,25 @@ public class User {
 
     private String password;
 
-    public User(int id, String email, String name, String password) {
+    private int fileId;
+
+    public User(int id, String email, String name, String password, int fileId) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.password = password;
+        this.fileId = fileId;
     }
 
     public User() {
+    }
+
+    public int getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(int fileId) {
+        this.fileId = fileId;
     }
 
     public int getId() {
