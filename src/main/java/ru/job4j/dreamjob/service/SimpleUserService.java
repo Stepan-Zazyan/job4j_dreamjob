@@ -23,8 +23,7 @@ public class SimpleUserService implements UserService {
     }
 
     @Override
-    public Optional<User> save(User user, FileDto image) {
-        saveNewFile(user, image);
+    public Optional<User> save(User user) {
         return userRepository.save(user);
     }
 

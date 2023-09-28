@@ -28,14 +28,13 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute User user, @RequestParam MultipartFile file, Model model) {
-        try {
-            userService.save(user, new FileDto(file.getOriginalFilename(), file.getBytes()));
-            return "redirect:/users";
-        } catch (Exception exception) {
-            model.addAttribute("message", exception.getMessage());
+    public String register(@ModelAttribute User user, Model model) {
+        var savedUser = userService.save(user);
+        if (savedUser.isEmpty()) {
+            model.addAttribute("message", "Пользователя с таким именем не существует");
             return "errors/404";
         }
+        return "redirect:/vacancies";
     }
 
     @GetMapping("/login")
@@ -54,14 +53,13 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute User user, @RequestParam MultipartFile file, Model model) {
-        try {
-            userService.save(user, new FileDto(file.getOriginalFilename(), file.getBytes()));
-            return "redirect:/users";
-        } catch (Exception exception) {
-            model.addAttribute("message", exception.getMessage());
+    public String create(@ModelAttribute User user, Model model) {
+        var savedUser = userService.save(user);
+        if (savedUser.isEmpty()) {
+            model.addAttribute("message", "Пользователь с таким именем не существует");
             return "errors/404";
         }
+        return "redirect:/vacancies";
     }
 
 }

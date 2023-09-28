@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface UserService {
-    Optional<User> save(User user, FileDto image);
+    Optional<User> save(User user);
 
     Optional<User> findByEmailAndPassword(String email, String password);
 

@@ -21,13 +21,16 @@ public class Sql2oUserRepository implements UserRepository {
     public Optional<User> save(User user) {
         try (var connection = sql2o.open()) {
         String sql = "Insert into users(email, name, password) values (:email, :name, :password)";
-            Query query = connection.createQuery(sql, true)
+        Query query = connection.createQuery(sql, true)
                     .addParameter("email", user.getEmail())
                     .addParameter("name", user.getName())
                     .addParameter("password", user.getPassword());
             int generatedId = query.executeUpdate().getKey(Integer.class);
             user.setId(generatedId);
             return Optional.of(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Optional.empty();
         }
     }
 
