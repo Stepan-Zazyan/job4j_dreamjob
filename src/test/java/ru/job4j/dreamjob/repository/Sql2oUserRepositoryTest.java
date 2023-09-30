@@ -8,10 +8,12 @@ import ru.job4j.dreamjob.configuration.DatasourceConfiguration;
 import ru.job4j.dreamjob.model.File;
 import ru.job4j.dreamjob.model.User;
 
+import java.util.Optional;
 import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class Sql2oUserRepositoryTest {
  private static Sql2oUserRepository sql2oUserRepository;
@@ -56,15 +58,15 @@ class Sql2oUserRepositoryTest {
 
     @Test
     public void whenSaveThenGetSame() {
-        var user = sql2oUserRepository.save(new User(0, "email5", "Kolya", "123", 1));
+        var user = sql2oUserRepository.save(new User(0, "email5", "Kolya", "123"));
         var savedUser = sql2oUserRepository.findByEmailAndPassword("email5", "123");
         assertThat(savedUser).usingRecursiveComparison().isEqualTo(user);
     }
 
     @Test
     public void whenSaveTheSameEmail() {
-        var user = sql2oUserRepository.save(new User(0, "email8", "Kolya", "123", 1));
-        assertThatThrownBy(() -> sql2oUserRepository.save(new User(0, "email8", "Kolya", "123", 1)))
-                .isInstanceOf(org.sql2o.Sql2oException.class);
+        sql2oUserRepository.save(new User(0, "email9", "Kolya", "123"));
+        var savedUser = sql2oUserRepository.save(new User(0, "email9", "Kolya", "123"));
+        assertEquals(savedUser, Optional.empty());
     }
 }
