@@ -52,14 +52,5 @@ public class UserController {
         return "redirect:/vacancies";
     }
 
-    @PostMapping("/create")
-    public String create(@ModelAttribute User user, Model model) {
-        var savedUser = userService.save(user);
-        if (savedUser.isEmpty()) {
-            model.addAttribute("message", "Пользователь с таким именем не существует");
-            return "errors/404";
-        }
-        return "redirect:/vacancies";
-    }
 
 }
