@@ -4,10 +4,7 @@ import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import ru.job4j.dreamjob.dto.FileDto;
 import ru.job4j.dreamjob.model.User;
-import ru.job4j.dreamjob.model.Vacancy;
 import ru.job4j.dreamjob.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +20,6 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
-    }
-
-    @GetMapping({"/", "/index"})
-    public String getIndex() {
-        return "index";
     }
 
     @GetMapping("/register")
