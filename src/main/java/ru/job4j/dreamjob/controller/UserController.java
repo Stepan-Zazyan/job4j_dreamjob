@@ -25,6 +25,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping({"/", "/index"})
+    public String getIndex() {
+        return "index";
+    }
+
     @GetMapping("/register")
     public String getRegistrationPage() {
         return "users/register";
@@ -34,7 +39,7 @@ public class UserController {
     public String register(@ModelAttribute User user, Model model) {
         var savedUser = userService.save(user);
         if (savedUser.isEmpty()) {
-            model.addAttribute("message", "Пользователя с таким именем не существует");
+            model.addAttribute("message", "Пользователь с такой почтой уже существует");
             return "errors/404";
         }
         return "redirect:/vacancies";
