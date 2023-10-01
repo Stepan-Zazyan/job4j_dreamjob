@@ -42,6 +42,9 @@ public class Sql2oUserRepository implements UserRepository {
                     .addParameter("email", email)
                     .addParameter("password", password);
             User user = query.executeAndFetchFirst(User.class);
+            if (query.executeUpdate().getResult() <= 0) {
+                throw new IllegalArgumentException("Юзера с такой почта не существует");
+            }
             return Optional.of(user);
         }
     }
