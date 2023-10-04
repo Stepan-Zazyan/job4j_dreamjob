@@ -2,23 +2,16 @@ package ru.job4j.dreamjob.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.ui.ConcurrentModel;
 import ru.job4j.dreamjob.model.User;
-import ru.job4j.dreamjob.repository.UserRepository;
 import ru.job4j.dreamjob.service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class UserControllerTest {
     private UserController userController;
@@ -78,16 +71,12 @@ class UserControllerTest {
     @Test
     public void whenLoginUserThenRegisterAndRedirectToVacanciesPage() {
         User user = new User(1, "mail@mail.ru", "name", "password");
-        var session = mock(HttpSession.class);
-        var httpServletRequest = mock(HttpServletRequest.class);
         when(userService.findByEmailAndPassword("mail@mail.ru", "password")).thenReturn(Optional.of(user));
-        when(userService.findByEmailAndPassword("mail@mail.ru", "password")).thenReturn(Optional.of(user));
-        session.setAttribute("user", user);
+        MockHttpServletRequest request = new MockHttpServletRequest();
+
         var model = new ConcurrentModel();
-        var view = userController.loginUser(user, model, httpServletRequest);
+        var view = userController.loginUser(user, model, request);
 
         assertThat(view).isEqualTo("redirect:/vacancies");
     }
-
-
 }
